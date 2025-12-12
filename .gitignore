@@ -63,3 +63,22 @@ venv/
 # OS
 Thumbs.db
 .DS_Store
+
+# Android / Capacitor
+frontend/android/.idea/
+frontend/android/.gradle/
+frontend/android/build/
+frontend/android/app/build/
+frontend/android/app/release/
+frontend/android/app/debug/
+frontend/android/local.properties
+frontend/android/captures/
+frontend/android/*.iml
+frontend/android/*.apk
+frontend/android/*.aab
+*.apk
+*.aab
+
+# Capacitor
+.capacitor/
+frontend/.capacitor/
