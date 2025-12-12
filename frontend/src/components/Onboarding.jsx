@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from './Toast';
+import axios from 'axios';
 
 const Onboarding = ({ onComplete }) => {
   const { user } = useAuth();
@@ -234,11 +235,24 @@ const Onboarding = ({ onComplete }) => {
 
   const handleComplete = async () => {
     try {
-      // TODO: Odeslat data na backend
-      success('Profil úspěšně nastaven!');
-      onComplete(userData);
+      // Odeslat data na backend
+      const response = await axios.post('/api/workers/onboarding', userData, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
+      });
+
+      if (response.data.success) {
+        success('Profil úspěšně nastaven!');
+        onComplete(response.data.user);
+      } else {
+        throw new Error(response.data.message || 'Nepodařilo se uložit profil');
+      }
     } catch (error) {
       console.error('Chyba při ukládání profilu:', error);
+      const errorMessage = error.response?.data?.message || error.message || 'Nepodařilo se uložit profil';
+      info(errorMessage);
     }
   };
 

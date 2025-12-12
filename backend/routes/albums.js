@@ -6,6 +6,11 @@ const { Op } = require('sequelize');
 const { upload, uploadsDir, thumbnailsDir, isImage, isVideo, validateFileSize } = require('../middleware/upload');
 const { processImage, getImageDimensions } = require('../utils/imageProcessor');
 const path = require('path');
+const ffmpeg = require('fluent-ffmpeg');
+const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
+
+// Nastavit cestu k ffmpeg binárce
+ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
 // GET /api/albums - Seznam alb s filtrováním
 router.get('/', optionalAuth, async (req, res) => {
@@ -765,9 +770,45 @@ router.post('/:id/upload-media', authenticateToken, upload.array('media', 10), a
           height = imageData.height;
           thumbnailUrl = `/uploads/thumbnails/${thumbnailFilename}`;
         } else {
-          // Pro videa - získat metadata (budoucí implementace s ffmpeg)
-          // Prozatím nastavíme základní hodnoty
-          thumbnailUrl = null; // TODO: Generate video thumbnail
+          // Pro videa - vygenerovat náhled pomocí ffmpeg
+          const thumbnailFilename = `thumb_${path.parse(file.filename).name}.jpg`;
+          const thumbnailPath = path.join(thumbnailsDir, thumbnailFilename);
+
+          try {
+            // Získat video metadata
+            const metadata = await new Promise((resolve, reject) => {
+              ffmpeg.ffprobe(file.path, (err, metadata) => {
+                if (err) reject(err);
+                else resolve(metadata);
+              });
+            });
+
+            // Získat video rozměry
+            const videoStream = metadata.streams.find(s => s.codec_type === 'video');
+            if (videoStream) {
+              width = videoStream.width;
+              height = videoStream.height;
+            }
+
+            // Vygenerovat náhled z první sekundy videa
+            await new Promise((resolve, reject) => {
+              ffmpeg(file.path)
+                .screenshots({
+                  timestamps: ['00:00:01'],
+                  filename: thumbnailFilename,
+                  folder: thumbnailsDir,
+                  size: '320x240'
+                })
+                .on('end', resolve)
+                .on('error', reject);
+            });
+
+            thumbnailUrl = `/uploads/thumbnails/${thumbnailFilename}`;
+          } catch (ffmpegError) {
+            console.error('FFmpeg thumbnail generation failed:', ffmpegError);
+            // Pokud ffmpeg selže, ponechat thumbnailUrl jako null
+            thumbnailUrl = null;
+          }
         }
 
         // Vytvořit Media záznam

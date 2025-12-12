@@ -1,10 +1,115 @@
 const express = require('express');
 const router = express.Router();
 const { Op } = require('sequelize');
-const { query } = require('express-validator');
+const { query, body } = require('express-validator');
 const { User, WorkerProfile, Service } = require('../db-models');
 const { authenticateToken, requireRole, optionalAuth } = require('../middleware/auth');
 const { handleValidationErrors, sanitizeString } = require('../middleware/validator');
+
+// POST /api/workers/onboarding - Complete onboarding (authenticated users)
+router.post('/onboarding',
+  authenticateToken,
+  [
+    body('displayName').optional().trim().isLength({ min: 2, max: 150 }),
+    body('bio').optional().trim().isLength({ max: 1000 }),
+    body('profileType').optional().isIn(['worker', 'client']),
+    body('categories').optional().isArray(),
+    body('priceRange').optional().isString(),
+    body('availability').optional().isString(),
+    body('paymentMethod').optional().isString(),
+    body('notifications').optional().isBoolean(),
+    body('privacyLevel').optional().isString(),
+    handleValidationErrors
+  ],
+  async (req, res) => {
+    try {
+      const {
+        displayName,
+        bio,
+        profileType,
+        categories,
+        priceRange,
+        availability,
+        paymentMethod,
+        notifications,
+        privacyLevel
+      } = req.body;
+
+      // Update User table fields
+      const userUpdates = {};
+      if (displayName) userUpdates.display_name = sanitizeString(displayName);
+      if (bio) userUpdates.bio = sanitizeString(bio);
+      if (profileType && profileType !== req.user.role) {
+        userUpdates.role = profileType;
+      }
+
+      if (Object.keys(userUpdates).length > 0) {
+        await User.update(userUpdates, {
+          where: { id: req.user.id }
+        });
+      }
+
+      // If worker, create or update WorkerProfile
+      const finalRole = profileType || req.user.role;
+      if (finalRole === 'worker') {
+        let workerProfile = await WorkerProfile.findOne({
+          where: { user_id: req.user.id }
+        });
+
+        // Parse price range to get hourly_rate
+        let hourlyRate = null;
+        if (priceRange) {
+          const match = priceRange.match(/(\d+)-(\d+)/);
+          if (match) {
+            const minPrice = parseInt(match[1]);
+            const maxPrice = parseInt(match[2]);
+            hourlyRate = (minPrice + maxPrice) / 2; // Use average
+          }
+        }
+
+        const workerData = {
+          is_available: availability === 'flexible' || availability === 'available'
+        };
+        if (hourlyRate) workerData.hourly_rate = hourlyRate;
+
+        if (workerProfile) {
+          await workerProfile.update(workerData);
+        } else {
+          await WorkerProfile.create({
+            user_id: req.user.id,
+            ...workerData
+          });
+        }
+      }
+
+      // Get updated user with profile
+      const updatedUser = await User.findByPk(req.user.id, {
+        include: [
+          { model: WorkerProfile, as: 'workerProfile' }
+        ]
+      });
+
+      res.json({
+        success: true,
+        message: 'Profil úspěšně nastaven',
+        user: {
+          id: updatedUser.id,
+          email: updatedUser.email,
+          display_name: updatedUser.display_name,
+          bio: updatedUser.bio,
+          role: updatedUser.role,
+          workerProfile: updatedUser.workerProfile
+        }
+      });
+    } catch (error) {
+      console.error('Onboarding error:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Chyba při ukládání profilu',
+        error: error.message
+      });
+    }
+});
 
 // GET /api/workers - Get all workers (public)
 router.get('/',

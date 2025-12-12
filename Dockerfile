@@ -33,6 +33,9 @@ FROM node:18-alpine
 
 WORKDIR /app
 
+# Install ffmpeg for video thumbnail generation
+RUN apk add --no-cache ffmpeg
+
 # Install production dependencies only
 COPY backend/package.json backend/pnpm-lock.yaml* ./
 RUN npm install -g pnpm && pnpm install --prod --frozen-lockfile
