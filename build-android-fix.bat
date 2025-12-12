@@ -12,13 +12,15 @@ REM Set ANDROID_HOME (Android SDK path)
 set ANDROID_HOME=%LOCALAPPDATA%\Android\Sdk
 echo ANDROID_HOME set to: %ANDROID_HOME%
 
-REM Add to PATH
-set PATH=%JAVA_HOME%\bin;%ANDROID_HOME%\platform-tools;%ANDROID_HOME%\tools;%PATH%
+REM IMPORTANT: Clear PATH and rebuild to ensure JDK 21 is used
+REM This prevents system JDK 25 from being picked up
+set "PATH=%JAVA_HOME%\bin;%ANDROID_HOME%\platform-tools;%ANDROID_HOME%\tools;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem"
 
-REM Verify Java
+REM Verify Java version (MUST be JDK 21)
 echo.
 echo Checking Java installation...
-java -version
+echo Expected: JDK 21
+"%JAVA_HOME%\bin\java" -version
 if %errorlevel% neq 0 (
     echo ERROR: Java not working!
     pause
