@@ -16,7 +16,7 @@ if %errorlevel% neq 0 (
 
 echo [1/4] Building web application...
 cd frontend
-call pnpm build
+call npm run build
 if %errorlevel% neq 0 (
     echo ERROR: Web build failed!
     pause

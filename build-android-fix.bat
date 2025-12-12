@@ -14,7 +14,8 @@ echo ANDROID_HOME set to: %ANDROID_HOME%
 
 REM IMPORTANT: Clear PATH and rebuild to ensure JDK 21 is used
 REM This prevents system JDK 25 from being picked up
-set "PATH=%JAVA_HOME%\bin;%ANDROID_HOME%\platform-tools;%ANDROID_HOME%\tools;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem"
+REM Also include Node.js paths for npm/npx
+set "PATH=%JAVA_HOME%\bin;%ANDROID_HOME%\platform-tools;%ANDROID_HOME%\tools;%ProgramFiles%\nodejs;%APPDATA%\npm;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem"
 
 REM Verify Java version (MUST be JDK 21)
 echo.
