@@ -1,0 +1,76 @@
+{
+  "name": "fairworkers",
+  "version": "1.0.0",
+  "description": "FairWorkers - Ethical platform for sex workers",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"pnpm backend:dev\" \"pnpm frontend:dev\"",
+    "dev:frontend": "pnpm frontend:dev",
+    "frontend:dev": "cd frontend && pnpm dev",
+    "frontend:build": "cd frontend && pnpm build",
+    "frontend:preview": "cd frontend && pnpm preview",
+    "backend:dev": "cd backend && pnpm dev",
+    "backend:start": "cd backend && pnpm start",
+    "backend:test": "cd backend && pnpm test",
+    "build": "pnpm frontend:build",
+    "start": "pnpm frontend:preview",
+    "install:frontend": "cd frontend && pnpm install",
+    "install:backend": "cd backend && pnpm install",
+    "install:all": "pnpm install:frontend && pnpm install:backend",
+    "test": "pnpm backend:test",
+    "clean": "rm -rf frontend/dist frontend/node_modules backend/node_modules node_modules",
+    "deploy:vercel": "pnpm install:all && pnpm build"
+  },
+  "keywords": [
+    "fairworkers",
+    "sex-workers",
+    "ethical-platform",
+    "react",
+    "vite",
+    "express",
+    "nodejs",
+    "spa"
+  ],
+  "author": "FairWorkers Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cassiusclay777/fairworkers.git"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "concurrently": "^8.2.2",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3"
+  },
+  "vercel": {
+    "buildCommand": "pnpm deploy:vercel",
+    "outputDirectory": "frontend/dist",
+    "devCommand": "pnpm dev",
+    "installCommand": "pnpm install:all"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.2.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.23.26",
+    "tailwind-merge": "^3.4.0"
+  }
+}

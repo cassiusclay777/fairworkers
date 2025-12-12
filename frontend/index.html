@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💎</text></svg>" />
+
+    <!-- Viewport & Theme -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#9333ea" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <!-- SEO Meta Tags -->
+    <title>FairWorkers 💎 Férová platforma s 15% provizí</title>
+    <meta name="description" content="Etická platforma pro sex workery. Pouze 15% provize vs 40% konkurence. Real-time chat, live streaming, bezpečné platby. Začni vydělávat víc!" />
+    <meta name="keywords" content="fairworkers, sex work, etická platforma, nízká provize, live streaming, bezpečné platby" />
+    <meta name="author" content="FairWorkers Team" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://fairworkers.com/" />
+    <meta property="og:title" content="FairWorkers 💎 Férová platforma s 15% provizí" />
+    <meta property="og:description" content="Zatímco konkurence si nechává 40%, my vám vrátíme 85% vašich výdělků. Protože si zasloužíte víc." />
+    <meta property="og:image" content="https://fairworkers.com/og-image.jpg" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://fairworkers.com/" />
+    <meta property="twitter:title" content="FairWorkers 💎 Férová platforma s 15% provizí" />
+    <meta property="twitter:description" content="Etická platforma pro sex workery s nejnižší provizí na trhu." />
+    <meta property="twitter:image" content="https://fairworkers.com/twitter-image.jpg" />
+
+    <!-- Security -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // Polyfill for Node.js global variable (needed for simple-peer)
+      window.global = window;
+
+      // Register service worker for PWA
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {
+            // Silent fail if no service worker
+          });
+        });
+      }
+    </script>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "FairWorkers - Férová platforma",
+  "short_name": "FairWorkers",
+  "description": "Etická platforma pro sex workery s pouze 15% provizí",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#9333ea",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["social", "lifestyle"],
+  "lang": "cs",
+  "dir": "ltr"
+}

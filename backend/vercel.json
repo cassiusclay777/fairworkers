@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node",
+      "config": {
+        "maxLambdaSize": "50mb",
+        "runtime": "nodejs20.x"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "server.js"
+    }
+  ],
+  "env": {
+    "DATABASE_URL": "@database_url",
+    "JWT_SECRET": "@jwt_secret",
+    "CCBILL_CLIENT_ACCOUNT": "@ccbill_client_account",
+    "CCBILL_SUBACC": "@ccbill_subacc",
+    "CCBILL_SALT": "@ccbill_salt",
+    "CCBILL_API_KEY": "@ccbill_api_key",
+    "CCBILL_API_SECRET": "@ccbill_api_secret",
+    "REDIS_URL": "@redis_url",
+    "NODE_ENV": "production"
+  }
+}

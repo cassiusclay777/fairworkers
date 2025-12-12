@@ -1,11 +1,13 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import api from './utils/axios';
 import { useAuth } from './contexts/AuthContext';
+import { useTheme, ThemeToggle } from './contexts/ThemeContext';
 import Register from './components/Register';
 import Login from './components/Login';
 import OnlineUsers from './components/OnlineUsers';
 import SkeletonLoader from './components/SkeletonLoader';
 import Sidebar from './components/Sidebar';
+import BottomNav from './components/BottomNav';
 
 // Lazy load non-critical components for better performance
 const Chat = lazy(() => import('./Chat'));
@@ -51,6 +53,7 @@ function App() {
   const [selectedWorkerForWishlist, setSelectedWorkerForWishlist] = useState(null);
   const [loadingWorkers, setLoadingWorkers] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('dashboard');
 
   useEffect(() => {
     calculateEarnings();
@@ -98,6 +101,11 @@ function App() {
 
   return (
     <div className="min-h-screen flex">
+      {/* Skip link pro přístupnost */}
+      <a href="#main-content" className="skip-link">
+        Přeskočit na hlavní obsah
+      </a>
+
       {/* Sidebar pro přihlášené uživatele */}
       {isAuthenticated && (
         <Sidebar 
@@ -107,9 +115,9 @@ function App() {
       )}
 
       {/* Hlavní obsah */}
-      <div className={`flex-1 ${isAuthenticated ? 'md:ml-64' : ''}`}>
+      <div id="main-content" className={`flex-1 ${isAuthenticated ? 'md:ml-64' : ''}`}>
         {/* Navbar */}
-        <nav className="fixed top-0 w-full bg-black/20 backdrop-blur-xl border-b border-white/10 z-40">
+        <nav className="fixed top-0 w-full bg-black/20 backdrop-blur-xl border-b border-white/10 z-40" role="navigation" aria-label="Hlavní navigace">
           <div className="container mx-auto px-6 py-4 flex justify-between items-center">
             <div className="flex items-center space-x-2">
               {/* Tlačítko pro otevření sidebaru na mobilech */}
@@ -132,6 +140,10 @@ function App() {
               <a href="#benefits" className="text-white/80 hover:text-white transition">Výhody</a>
               <a href="#calculator" className="text-white/80 hover:text-white transition">Kalkulačka</a>
               <a href="#workers" className="text-white/80 hover:text-white transition">Profily</a>
+              
+              {/* Theme toggle */}
+              <ThemeToggle />
+              
               {isAuthenticated ? (
                 <div className="flex items-center space-x-4">
                   {/* Zjednodušený navbar pro přihlášené uživatele */}
@@ -588,6 +600,12 @@ function App() {
         {/* Online Users Widget */}
         <OnlineUsers />
       </Suspense>
+
+      {/* Bottom Navigation pro mobily */}
+      <BottomNav 
+        activeSection={activeSection}
+        onSectionChange={setActiveSection}
+      />
       </div>
     </div>
   );

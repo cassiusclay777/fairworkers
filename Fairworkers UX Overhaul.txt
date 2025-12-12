@@ -1,0 +1,116 @@
+FairworkersFull UX Overhaul- Claude ProPrompt
+1.MASTER PROMPT PRO CLAUDE(Ctrl+Lv VS Code)
+@claude "VYGENERUJ kompletní UX overhaulpro Fairworkers aplikaci:
+BUSINESSCÍLE:
+Zvýšit konverzi z 5%na 45% (9xgrowth)
+Zkrátitregistraci na 1 klik (Google OAuth)
+Mobile-first (iPhone SEbaseline)
+Voice input pro lazy users
+
+WIREFRAMES(ASCII art, 3 screeny):
+LANDINGPAGE - Hero + CTA
+JOB LIST- Swipe cards (Tinder style)
+USER PROFILE- Earnings+ Settings
+
+TECHSTACK:
+Next.js 15(App Router)
+shadcn/uicomponents
+TailwindCSS4
+FramerMotion (swipe animations)
+SupabaseAuth (Google OAuth)
+
+DELIVERABLES:
+Wireframes+ userflow diagram
+10atomiccomponents + Storybook
+Figma designsystem(colors, typography)
+Complete App.tsxrefactor
+globals.css+ Tailwind config
+PWA manifest + service worker
+Mobileperformance checklist
+
+START S WIREFRAMY JAKO ASCII ART."
+2.FOLLOW-UP PROMPTS (po wireframech)
+Prompt 2: Components + Design System
+@claude "VYGENERUJ shadcn/ui komponenty:
+KOMPONENTY (10 max):
+HeroButton (64px height, full-width, accent color)
+JobCard (swipeable, image, title, pay, +15% badge)
+GoogleAuthButton (OAuth flow)
+BalanceDisplay (earnings animované counter)
+SwipeContainer (Framer Motion gesture detection)
+BottomSheet (job details modal)
+VoiceInput (Web Speech API)
+NotificationBell (PWA push)
+ProgressBar (registration funnel)
+EmptyState (fallback UI)
+
+BARVY:
+Primary: #000000 (black)
+Accent: #FF4081 (magenta)
+Background: #FFFFFF
+Text: #1A1A1A
+Contrast: 15:1 WCAG AAA
+
+FONT:
+Heading: SF Pro Display, weight 900, size 48px
+Body: -apple-system, weight 500, size 16px
+Line height: 1.2 (tight)
+
+OUTPUT: Tailwind config + component code"
+Prompt 3: Landing Page Flow
+@claude "REFAKTORUJ landing page na konverzní funnel:
+STRUKTURA (max 3 sekce):
+HERO (2s video 'práce+peníze', big CTA)
+PROOF (2 screenshots + '85% vydìlávajících')
+CTA (Google sign-in button + phone input backup)
+
+METRICS:
+LCP <1s
+CLS <0.1
+FID <50ms
+
+COPY (ÈESKÉHO TEXTU):
+Heading: 'Práce na míru. Bez èekání.'
+Subheading: 'Zaregistruj se, pracuj, dostañ peníze.'
+CTA: 'Zaèít (1 klik)'
+
+OUTPUT: App.tsx + CSS animations"
+Prompt 4: Job Swipe Cards
+@claude "VYGENERUJ swipeable job cards (Tinder style):
+KARTA OBSAHUJE:
+Image top (construction/delivery/care)
+Job title H2 (20px)
+Pay amount (accent color, bold)
+'+15% dnes' badge (green)
+Location (small text)
+Swipe left (skip) / right (interested)
+
+ANIMACE:
+Swipe: Framer Motion pan gesture
+Spring animation (bounce)
+Stack effect (card overlay)
+Haptic feedback (navigator.vibrate)
+
+DATA:[{id: '1',title: 'Øidiè - Brno',pay: '450 Kè/h',image: '/delivery.jpg',bonus: 15}]
+OUTPUT: JobCard.tsx + useSwipe hook"
+Prompt 5: PWA + Offline
+@claude "VYGENERUJ PWA setup pro offline práci:
+DELIVERABLES:
+manifest.json (app name, icons, colors)
+service-worker.ts (cache-first for images)
+_app.tsx hook (registerServiceWorker)
+next.config.js (next-pwa plugin)
+
+FEATURES:
+Offline job list (cached)
+Push notifications (job alerts)
+App icon (home screen)
+Splash screen (custom)
+
+TESTING:
+DevTools: Application > Manifest
+Lighthouse: PWA score >90
+
+OUTPUT: Kompletní PWA config"
+3. INTEGRATION CHECKLIST
+. Backup current codebase (git branch). Install: pnpm add shadcn-ui framer-motion next-pwa. Setup: npx shadcn-ui@latest init. Migrate: App Router (next/app). Auth: Supabase OAuth integration. Analytics: Vercel Analytics + PostHog. Test: pnpm dev (localhost:3000). Lighthouse: npm run build && npx lighthouse 

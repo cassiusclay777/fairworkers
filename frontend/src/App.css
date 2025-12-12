@@ -1,0 +1,287 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 2rem 0;
+  text-align: center;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.app-header h1 {
+  font-size: 3rem;
+  color: #764ba2;
+  margin-bottom: 0.5rem;
+}
+
+.app-header p {
+  font-size: 1.2rem;
+  color: #666;
+  font-weight: 300;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  flex: 1;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 3rem 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.hero h2 {
+  font-size: 2.5rem;
+  color: #764ba2;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.3rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.calculator {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+  margin-bottom: 3rem;
+}
+
+.calculator h3 {
+  color: #764ba2;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.input-group {
+  display: flex;
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.input-group label {
+  font-weight: 600;
+  color: #555;
+}
+
+.input-group input {
+  padding: 0.75rem;
+  border: 2px solid #e1e1e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  min-width: 150px;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #764ba2;
+}
+
+.input-group button {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.input-group button:hover {
+  transform: translateY(-2px);
+}
+
+.comparison-results {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.system {
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.our-system {
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+}
+
+.competitor {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  color: white;
+}
+
+.system h4 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.earnings p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.advantage {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  margin-top: 1rem;
+}
+
+.advantage h3 {
+  color: #4CAF50;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.benefits {
+  background: white;
+  padding: 3rem 2rem;
+  border-radius: 15px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+  margin-bottom: 3rem;
+}
+
+.benefits h3 {
+  text-align: center;
+  color: #764ba2;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.benefit {
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(118, 75, 162, 0.1);
+  border-radius: 12px;
+  transition: transform 0.3s;
+}
+
+.benefit:hover {
+  transform: translateY(-5px);
+}
+
+.benefit h4 {
+  color: #764ba2;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.demo-workers {
+  background: white;
+  padding: 3rem 2rem;
+  border-radius: 15px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+}
+
+.demo-workers h3 {
+  text-align: center;
+  color: #764ba2;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.workers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.worker-card {
+  background: rgba(118, 75, 162, 0.05);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 2px solid rgba(118, 75, 162, 0.1);
+  text-align: center;
+}
+
+.worker-card h4 {
+  color: #764ba2;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.rating {
+  font-size: 1.2rem;
+  color: #ffa500;
+  margin-bottom: 1rem;
+}
+
+.app-footer {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 2rem 0;
+  text-align: center;
+  margin-top: auto;
+}
+
+.app-footer p {
+  color: #666;
+  margin: 0.5rem 0;
+}
+
+/* Responsivní design */
+@media (max-width: 768px) {
+  .comparison-results {
+    grid-template-columns: 1fr;
+  }
+  
+  .input-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .app-header h1 {
+    font-size: 2rem;
+  }
+  
+  .hero h2 {
+    font-size: 1.8rem;
+  }
+  
+  .container {
+    padding: 1rem;
+  }
+}

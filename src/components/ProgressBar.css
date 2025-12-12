@@ -1,0 +1,3 @@
+[data-progress] {
+  inline-size: attr(data-progress %);
+}
